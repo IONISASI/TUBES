@@ -30,6 +30,7 @@ def conver_array_to_real_values(arr_data):
 def modify_datas(idx,col,value):
     datas[idx][col] = value
 
+
 def convert_datas_to_string():
   string_data = ",".join(header) + "\n"
   for arr_data in datas:
@@ -38,16 +39,14 @@ def convert_datas_to_string():
     string_data += "\n"
   return string_data
 
-with open('hai.csv','r') as f:
-    txt_raw = f.readlines()
-    txt = [raw_line.replace("\n", "") for raw_line in txt_raw]
-    raw_header = txt.pop(0)
-    header = convert_line_to_data(raw_header)
-    print(header)
-    for line in txt:
-        arr_data = convert_line_to_data(line)
-        value = conver_array_to_real_values(arr_data)
-        print(arr_data)
-
-
-
+def username_unik(username):
+    with open('user.csv','r') as f:
+        cek_unik = True
+        txt_raw = f.readlines()
+        txt = [raw_line.replace("\n", "") for raw_line in txt_raw]
+        raw_header = txt.pop(0)
+        for line in txt:
+            list_line = splits(line)
+            if(list_line[1] == username):
+                cek_unik = False
+        return cek_unik
