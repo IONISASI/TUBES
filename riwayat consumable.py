@@ -26,36 +26,28 @@ def convert_line_to_data(line):
     arr_data = [data.strip() for data in raw_arr]
     return arr_data
 
-def username_unik(username):
-    datas = datas_from_csv("consumable_history.csv")
-    cek_unik = True
-    for arr_data in datas:
-        if(arr_data[1] == username):
-            cek_unik = False
-    return cek_unik
+def consumable(id_id_pengambil,id_consumable,tanggal_peminjaman):
+    csv_filename = "consumable_history.csv"
+    datas = datas_from_csv(csv_filename)
+    idi = len(datas)+1
+    item = str(idi) + ";" + id_pengambil + ";" + id_consumable + ";" + tanggal_peminjaman + ";" + "\n"
+    with open('consumable_history.csv','a') as f:
+        f.write(item)
 
-def CariIndex():
-    datas = datas_from_csv("consumable_history.csv")
-    idx = 1
-    for arr_data in datas:
-        print(arr_data)
-        idx += 1
-    return str(idx)
 
-nama = input("Masukkan nama: ").strip()
-while True:
-    username = input("Masukkan username: ").strip()
-    if (username_unik(username)):
-        break
-    else:
-        print("Maaf, username sudah diambil :(")
+ID = input("Massukkan ID : ")
+nama = input("Nama pengambil : ")
+jumlah = input("Nama consumable : ")
+tanggal = input("Tanggal pengambilan: ")
+jumlah = input("Jumlah: ")
 
-password = input("Masukkan password: ").strip()
-alamat = input("Masukkan alamat: ").strip()
-userId = 0
-userID = CariIndex()
-user = ";".join([userID, username, nama, alamat, password, "user"]) + "\n"
-with open('consumable_history.csv','a') as f:
-    f.write(user)
-print(f"User {username} telah berhasil register ke dalam Kantong Ajaib")
-
+csv_filename = "consumable.csv"
+datas = datas_from_csv(csv_filename)
+for arr_data in datas:
+        if arr_data[0] == ID :
+            if arr_data[3] >= jumlah:
+                consumable("1", ID, tanggal, jumlah)
+                print(arr_data[1],"Riwayat pengembalian : ",jumlah)
+            else:
+                print("Tidak dikembalikan")
+            break
